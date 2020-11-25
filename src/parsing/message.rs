@@ -1,9 +1,9 @@
+use crate::alloc::borrow::Cow;
 use crate::parsing::fields::{fields, Field};
 use crate::prelude::*;
-use std::borrow::Cow;
 
 pub fn line(input: &[u8]) -> Res<Cow<str>> {
-    let max_idx = std::cmp::min(input.len(), 998);
+    let max_idx = core::cmp::min(input.len(), 998);
 
     // index cannot be out of range so no need to check
     unsafe {
@@ -24,7 +24,7 @@ pub fn line(input: &[u8]) -> Res<Cow<str>> {
 }
 
 pub fn check_line(input: &[u8]) -> Res<()> {
-    let max_idx = std::cmp::min(input.len(), 998);
+    let max_idx = core::cmp::min(input.len(), 998);
 
     // index cannot be out of range so no need to check
     unsafe {

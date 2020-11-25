@@ -1,4 +1,5 @@
-use std::borrow::Cow;
+use crate::alloc::borrow::Cow;
+use crate::alloc::vec::*;
 
 #[derive(Debug, Clone)]
 pub struct Mailbox<'a> {

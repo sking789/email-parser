@@ -1,5 +1,5 @@
+use crate::alloc::borrow::Cow;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 #[inline]
 pub fn fws(input: &[u8]) -> Res<Cow<str>> {

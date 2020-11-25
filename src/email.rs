@@ -1,6 +1,6 @@
 use crate::address::*;
+use crate::alloc::borrow::Cow;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 /// A struct representing a valid RFC 5322 message.
 ///
@@ -287,7 +287,7 @@ impl<'a> Email<'a> {
     }
 }
 
-impl<'a> std::convert::TryFrom<&'a [u8]> for Email<'a> {
+impl<'a> core::convert::TryFrom<&'a [u8]> for Email<'a> {
     type Error = crate::error::Error;
 
     fn try_from(value: &'a [u8]) -> Result<Self, Self::Error> {

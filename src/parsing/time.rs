@@ -235,6 +235,15 @@ mod test {
         );
 
         assert_eq!(
+            date_time(b"Fri, 20 Nov 2020 13:19:57 +0800")
+                .unwrap()
+                .1
+                .get_timestamp()
+                .unwrap(),
+            1605849597
+        );
+
+        assert_eq!(
             date_time(b"Mon, 12 Apr 2023 10:25:03 +0000").unwrap().1,
             DateTime {
                 day_name: Some(Day::Monday),

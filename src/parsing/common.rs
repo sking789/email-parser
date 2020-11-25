@@ -1,5 +1,5 @@
+use crate::alloc::borrow::Cow;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 pub fn atom(mut input: &[u8]) -> Result<(&[u8], Cow<str>), Error> {
     if let Ok((new_input, _)) = cfws(input) {

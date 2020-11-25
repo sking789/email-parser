@@ -1,3 +1,5 @@
+pub use crate::alloc::vec;
+pub use crate::alloc::vec::*;
 pub use crate::email::Email;
 pub(crate) use crate::error::*;
 pub(crate) use crate::parsing::address::*;

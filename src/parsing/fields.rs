@@ -1,7 +1,7 @@
 use crate::address::*;
+use crate::alloc::borrow::Cow;
 use crate::parsing::time::*;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 #[derive(Debug)]
 pub enum TraceField<'a> {
@@ -391,8 +391,14 @@ mod tests {
 
     #[test]
     fn test_unknown_field() {
-        assert_eq!(unknown(b"hidden-field:hidden message\r\n").unwrap().1.1, "hidden message");
-        assert_eq!(unknown(b"hidden-field:hidden message\r\n").unwrap().1.0, "hidden-field");
+        assert_eq!(
+            (unknown(b"hidden-field:hidden message\r\n").unwrap().1).1,
+            "hidden message"
+        );
+        assert_eq!(
+            (unknown(b"hidden-field:hidden message\r\n").unwrap().1).0,
+            "hidden-field"
+        );
     }
 
     #[test]
@@ -407,9 +413,27 @@ mod tests {
             "mubelotix"
         );
 
-        assert!(matches!(received(b"Received:test<mubelotix@gmail.com>;5 May 2003 18:59:03 +0000\r\n").unwrap().1.0[0], ReceivedToken::Word(_)));
-        assert!(matches!(received(b"Received:test<mubelotix@gmail.com>;5 May 2003 18:59:03 +0000\r\n").unwrap().1.0[1], ReceivedToken::Addr(_)));
-        assert!(matches!(received(b"Received:mubelotix.dev;5 May 2003 18:59:03 +0000\r\n").unwrap().1.0[0], ReceivedToken::Domain(_)));
+        assert!(matches!(
+            (received(b"Received:test<mubelotix@gmail.com>;5 May 2003 18:59:03 +0000\r\n")
+                .unwrap()
+                .1)
+                .0[0],
+            ReceivedToken::Word(_)
+        ));
+        assert!(matches!(
+            (received(b"Received:test<mubelotix@gmail.com>;5 May 2003 18:59:03 +0000\r\n")
+                .unwrap()
+                .1)
+                .0[1],
+            ReceivedToken::Addr(_)
+        ));
+        assert!(matches!(
+            (received(b"Received:mubelotix.dev;5 May 2003 18:59:03 +0000\r\n")
+                .unwrap()
+                .1)
+                .0[0],
+            ReceivedToken::Domain(_)
+        ));
 
         assert!(trace(b"Return-Path:<>\r\nReceived:akala miam miam;5 May 2003 18:59:03 +0000\r\nReceived:mubelotix.dev;5 May 2003 18:59:03 +0000\r\n").unwrap().0.is_empty());
     }
@@ -504,8 +528,20 @@ mod tests {
 
     #[test]
     fn test_ids() {
-        assert_eq!(message_id(b"Message-ID:<556100154@gmail.com>\r\n").unwrap().1.0, "556100154");
-        assert_eq!(message_id(b"Message-ID:<556100154@gmail.com>\r\n").unwrap().1.1, "gmail.com");
+        assert_eq!(
+            (message_id(b"Message-ID:<556100154@gmail.com>\r\n")
+                .unwrap()
+                .1)
+                .0,
+            "556100154"
+        );
+        assert_eq!(
+            (message_id(b"Message-ID:<556100154@gmail.com>\r\n")
+                .unwrap()
+                .1)
+                .1,
+            "gmail.com"
+        );
 
         assert_eq!(
             references(b"References:<qzdzdq@qdz.com><dzdzjd@zdzdj.dz>\r\n")

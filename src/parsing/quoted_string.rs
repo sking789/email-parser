@@ -1,5 +1,5 @@
+use crate::alloc::borrow::Cow;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 pub fn quoted_pair(input: &[u8]) -> Result<(&[u8], Cow<str>), Error> {
     let (input, ()) = tag(input, b"\\")?;

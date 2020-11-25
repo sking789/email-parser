@@ -1,5 +1,5 @@
+use crate::alloc::borrow::Cow;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 #[inline]
 pub(crate) fn tag<'a>(input: &'a [u8], expected: &'static [u8]) -> Res<'a, ()> {
@@ -226,8 +226,8 @@ mod tests {
         let data4 = from_slice(&data[3..]);
         add_string(&mut data3, data4);
 
-        assert!(matches!(data1, std::borrow::Cow::Borrowed(_)));
-        assert!(matches!(data3, std::borrow::Cow::Owned(_)));
+        assert!(matches!(data1, crate::alloc::borrow::Cow::Borrowed(_)));
+        assert!(matches!(data3, crate::alloc::borrow::Cow::Owned(_)));
     }
 
     #[test]

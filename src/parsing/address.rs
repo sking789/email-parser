@@ -1,6 +1,6 @@
 use crate::address::*;
+use crate::alloc::borrow::Cow;
 use crate::prelude::*;
-use std::borrow::Cow;
 
 pub fn message_id(input: &[u8]) -> Res<(Cow<str>, Cow<str>)> {
     fn no_fold_litteral(input: &[u8]) -> Res<Cow<str>> {
@@ -168,9 +168,9 @@ mod tests {
 
     #[test]
     fn test_message_id() {
-        assert_eq!(message_id(b"<idleft@idright>").unwrap().1.0, "idleft");
-        assert_eq!(message_id(b"<idleft@idright>").unwrap().1.1, "idright");
-        assert_eq!(message_id(b"<idleft@[idright]>").unwrap().1.1, "idright");
+        assert_eq!((message_id(b"<idleft@idright>").unwrap().1).0, "idleft");
+        assert_eq!((message_id(b"<idleft@idright>").unwrap().1).1, "idright");
+        assert_eq!((message_id(b"<idleft@[idright]>").unwrap().1).1, "idright");
     }
 
     #[test]

@@ -1,4 +1,5 @@
-use std::borrow::Cow;
+use crate::alloc::borrow::Cow;
+use crate::alloc::string::ToString;
 
 #[inline]
 pub(crate) fn empty_string() -> Cow<'static, str> {
@@ -7,7 +8,7 @@ pub(crate) fn empty_string() -> Cow<'static, str> {
 
 #[inline]
 pub(crate) fn from_slice(slice: &[u8]) -> Cow<str> {
-    unsafe { Cow::Borrowed(std::str::from_utf8_unchecked(slice)) }
+    unsafe { Cow::Borrowed(alloc::str::from_utf8_unchecked(slice)) }
 }
 
 #[inline]
@@ -28,11 +29,11 @@ pub(crate) fn add_string<'a, 'b>(s1: &'b mut Cow<'a, str>, s2: Cow<'a, str>) {
                     let first2 = data2.as_ptr();
                     if first1 as usize + data1.len() == first2 as usize {
                         // this is what guarantee safety
-                        let slice = std::slice::from_raw_parts(
+                        let slice = alloc::slice::from_raw_parts(
                             first1,
                             first2 as usize + data2.len() - first1 as usize,
                         );
-                        *data1 = std::str::from_utf8_unchecked(slice);
+                        *data1 = alloc::str::from_utf8_unchecked(slice);
                         return;
                     }
                 }
